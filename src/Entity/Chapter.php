@@ -37,7 +37,7 @@ class Chapter
     /**
      * @var Collection<int, Comment>
      */
-    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'chapter')]
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'Chapter')]
     private Collection $comments;
 
     public function __construct()
