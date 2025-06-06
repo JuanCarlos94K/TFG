@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Volume;
 use App\Repository\BookRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -26,7 +27,7 @@ class Book
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'books')]
-    private ?volume $volume = null;
+    private ?Volume $Volume = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $cover = null;
@@ -34,7 +35,7 @@ class Book
     /**
      * @var Collection<int, Chapter>
      */
-    #[ORM\OneToMany(targetEntity: Chapter::class, mappedBy: 'book')]
+    #[ORM\OneToMany(targetEntity: Chapter::class, mappedBy: 'Book')]
     private Collection $chapters;
 
     public function __construct()
@@ -83,14 +84,14 @@ class Book
         return $this;
     }
 
-    public function getVolume(): ?volume
+    public function getVolume(): ?Volume
     {
-        return $this->volume;
+        return $this->Volume;
     }
 
-    public function setVolume(?volume $volume): static
+    public function setVolume(?Volume $Volume): static
     {
-        $this->volume = $volume;
+        $this->Volume = $Volume;
 
         return $this;
     }

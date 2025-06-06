@@ -8,7 +8,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Number</th>
                 <th>Title</th>
                 <th>Description</th>
@@ -19,11 +18,10 @@
         <tbody>
         {% for book in books %}
             <tr>
-                <td>{{ book.id }}</td>
                 <td>{{ book.number }}</td>
                 <td>{{ book.title }}</td>
                 <td>{{ book.description }}</td>
-                <td>{{ book.cover }}</td>
+                <td> <img src="{{ book.cover }}" alt="Portada del libro" style="max-width: 200px;" /></td>
                 <td>
                     <a href="{{ path('app_book_show', {'id': book.id}) }}">show</a>
                     <a href="{{ path('app_book_edit', {'id': book.id}) }}">edit</a>

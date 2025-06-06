@@ -8,20 +8,18 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Image</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Aspecto</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
         {% for role in roles %}
             <tr>
-                <td>{{ role.id }}</td>
                 <td>{{ role.name }}</td>
                 <td>{{ role.description }}</td>
-                <td>{{ role.image }}</td>
+                <td> <img src="{{ role.image }}" alt="Personaje" style="max-width: 150px;" /></td>
                 <td>
                     <a href="{{ path('app_role_show', {'id': role.id}) }}">show</a>
                     <a href="{{ path('app_role_edit', {'id': role.id}) }}">edit</a>

@@ -1,38 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Chapter{% endblock %}
+{% block title %}Capítulo {{ chapter.number }} - {{ chapter.number }}{% endblock %}
 
 {% block body %}
-    <h1>Chapter</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ chapter.id }}</td>
-            </tr>
-            <tr>
-                <th>Number</th>
-                <td>{{ chapter.number }}</td>
-            </tr>
-            <tr>
-                <th>Slug</th>
-                <td>{{ chapter.slug }}</td>
-            </tr>
-            <tr>
-                <th>Content</th>
-                <td>{{ chapter.content }}</td>
-            </tr>
-            <tr>
-                <th>PublishedAt</th>
-                <td>{{ chapter.publishedAt ? chapter.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_chapter_index') }}">back to list</a>
-
-    <a href="{{ path('app_chapter_edit', {'id': chapter.id}) }}">edit</a>
-
-    {{ include('chapter/_delete_form.html.twig') }}
+<article class="chapter-detail">
+    <h1>Capítulo {{ chapter.number }}: {{ chapter.number }}</h1>
+    <p><em>Personaje POV: {{ chapter.role.name }}</em></p> {# Asumiendo que la relación se llama role #}
+    <div class="chapter-content">
+        {{ chapter.content|raw }} {# Usamos raw si el contenido tiene HTML #}
+    </div>
+</article>
 {% endblock %}

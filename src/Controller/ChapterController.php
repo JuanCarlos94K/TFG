@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Chapter;
 use App\Form\ChapterForm;
 use App\Repository\ChapterRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,9 +43,15 @@ final class ChapterController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_chapter_show', methods: ['GET'])]
-    public function show(Chapter $chapter): Response
+    #[Route('/{slug}', name: 'chapter_show', methods:['GET'])]
+    public function show(ChapterRepository $chapterRepository, string $slug): Response
     {
+        $chapter = $chapterRepository->findOneBy(['slug' => $slug]);
+
+        if (!$chapter) {
+            throw $this->createNotFoundException('Capítulo no encontrado');
+        }
+
         return $this->render('chapter/show.html.twig', [
             'chapter' => $chapter,
         ]);
@@ -78,4 +85,24 @@ final class ChapterController extends AbstractController
 
         return $this->redirectToRoute('app_chapter_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/chapters', name: 'chapter_list')]
+    public function list(ChapterRepository $chapterRepository, PaginatorInterface $paginator, Request $request): Response
+    {
+        $queryBuilder = $chapterRepository->createQueryBuilder('c')
+            ->orderBy('c.number', 'ASC');
+
+        $pagination = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            10 /*limit per page*/
+        );
+
+        return $this->render('chapter/list.html.twig', [
+            'pagination' => $pagination,
+        ]);
+    }
+
+    
+
 }

@@ -25,7 +25,7 @@
                 <td>{{ chapter.content }}</td>
                 <td>{{ chapter.publishedAt ? chapter.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_chapter_show', {'id': chapter.id}) }}">show</a>
+                    <a href="{{ path('chapter_show', {'slug': chapter.slug}) }}">show</a>
                     <a href="{{ path('app_chapter_edit', {'id': chapter.id}) }}">edit</a>
                 </td>
             </tr>

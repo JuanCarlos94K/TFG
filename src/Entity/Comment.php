@@ -21,7 +21,7 @@ class Comment
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
-    private ?user $author = null;
+    private ?User $author = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
     private ?chapter $chapter = null;
@@ -55,12 +55,12 @@ class Comment
         return $this;
     }
 
-    public function getAuthor(): ?user
+    public function getAuthor(): ?User
     {
         return $this->author;
     }
 
-    public function setAuthor(?user $author): static
+    public function setAuthor(?User $author): static
     {
         $this->author = $author;
 

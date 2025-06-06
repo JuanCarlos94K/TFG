@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lista de Capítulos{% endblock %}
+
+{% block body %}
+<h1>Capítulos</h1>
+
+<div class="chapter-list">
+    {% for chapter in pagination %}
+        <article class="chapter-item">
+            <h2>
+                <a href="{{ path('chapter_show', {'slug': chapter.slug}) }}">
+                    Capítulo {{ chapter.number }}: {{ chapter.title }}
+                </a>
+            </h2>
+            <p>{{ chapter.description|slice(0, 200) ~ '...' }}</p>
+        </article>
+    {% else %}
+        <p>No hay capítulos publicados aún.</p>
+    {% endfor %}
+</div>
+
+<div class="pagination">
+    {{ knp_pagination_render(pagination) }}
+</div>
+{% endblock %}

@@ -29,10 +29,10 @@ class Chapter
     private ?\DateTime $publishedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'chapters')]
-    private ?book $book = null;
+    private ?Book $Book = null;
 
     #[ORM\ManyToOne(inversedBy: 'chapters')]
-    private ?role $role = null;
+    private ?Role $Role = null;
 
     /**
      * @var Collection<int, Comment>
@@ -98,26 +98,26 @@ class Chapter
         return $this;
     }
 
-    public function getBook(): ?book
+    public function getBook(): ?Book
     {
-        return $this->book;
+        return $this->Book;
     }
 
-    public function setBook(?book $book): static
+    public function setBook(?Book $Book): static
     {
-        $this->book = $book;
+        $this->Book = $Book;
 
         return $this;
     }
 
-    public function getRole(): ?role
+    public function getRole(): ?Role
     {
-        return $this->role;
+        return $this->Role;
     }
 
-    public function setRole(?role $role): static
+    public function setRole(?Role $Role): static
     {
-        $this->role = $role;
+        $this->Role = $Role;
 
         return $this;
     }
