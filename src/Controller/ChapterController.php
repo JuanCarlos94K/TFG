@@ -43,7 +43,7 @@ final class ChapterController extends AbstractController
         ]);
     }
 
-    #[Route('/{slug}', name: 'chapter_show', methods:['GET'])]
+    #[Route('/{slug}', name: 'chapter_show', methods: ['GET'])]
     public function show(ChapterRepository $chapterRepository, string $slug): Response
     {
         $chapter = $chapterRepository->findOneBy(['slug' => $slug]);
@@ -52,8 +52,20 @@ final class ChapterController extends AbstractController
             throw $this->createNotFoundException('Capítulo no encontrado');
         }
 
+        $previousChapter = $chapterRepository->findOneBy([
+            'book' => $chapter->getBook(),
+            'number' => $chapter->getNumber() - 1,
+        ]);
+
+        $nextChapter = $chapterRepository->findOneBy([
+            'book' => $chapter->getBook(),
+            'number' => $chapter->getNumber() + 1,
+        ]);
+
         return $this->render('chapter/show.html.twig', [
             'chapter' => $chapter,
+            'previousChapter' => $previousChapter,
+            'nextChapter' => $nextChapter,
         ]);
     }
 
