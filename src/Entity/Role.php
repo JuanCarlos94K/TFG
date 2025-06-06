@@ -28,7 +28,7 @@ class Role
     /**
      * @var Collection<int, Chapter>
      */
-    #[ORM\OneToMany(targetEntity: Chapter::class, mappedBy: 'role')]
+    #[ORM\OneToMany(targetEntity: Chapter::class, mappedBy: 'Role')]
     private Collection $chapters;
 
     public function __construct()
