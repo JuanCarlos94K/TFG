@@ -1,8 +1,55 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-    background-color: skyblue;
+/* Definir variables CSS con tus colores personalizados */
+:root {
+  --color-background: #f9f8f6; /* coincide con background en tailwind.config.js */
+  --color-primary: #222222;
+  --color-secondary: #555555;
+  --color-accent: #9c6644;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-primary);
+    font-family: 'Merriweather', Georgia, serif;
+    line-height: 1.75;
+    max-width: 700px; /* ancho cómodo para leer */
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+  }
+
+  h1, h2, h3 {
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #3c2f2f;
+  }
+
+  a {
+    color: var(--color-accent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+
+  a:hover {
+    border-color: var(--color-accent);
+  }
+
+  article {
+    background: white;
+    box-shadow: 0 4px 12px rgba(156, 102, 68, 0.15);
+    border-radius: 6px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+  }
+.chapter-role-image {
+  max-width: 150px;
+  max-height: 150px;
+  width: auto;
+  height: auto;
+}
+
 }

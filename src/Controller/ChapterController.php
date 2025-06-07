@@ -37,10 +37,10 @@ final class ChapterController extends AbstractController
             return $this->redirectToRoute('app_chapter_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('chapter/new.html.twig', [
+            return $this->render('chapter/new.html.twig', [
             'chapter' => $chapter,
-            'form' => $form,
-        ]);
+            'form' => $form->createView(),
+            ]);
     }
 
     #[Route('/{slug}', name: 'chapter_show', methods: ['GET'])]
@@ -90,9 +90,15 @@ final class ChapterController extends AbstractController
     #[Route('/{id}', name: 'app_chapter_delete', methods: ['POST'])]
     public function delete(Request $request, Chapter $chapter, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$chapter->getId(), $request->getPayload()->getString('_token'))) {
+        // El token CSRF para el borrado debe coincidir con este id único
+        $submittedToken = $request->request->get('_token');
+
+        if ($this->isCsrfTokenValid('delete'.$chapter->getId(), $submittedToken)) {
             $entityManager->remove($chapter);
             $entityManager->flush();
+        } else {
+            // Opcional: lanzar excepción o mostrar mensaje si el token no es válido
+            throw $this->createAccessDeniedException('Token CSRF inválido.');
         }
 
         return $this->redirectToRoute('app_chapter_index', [], Response::HTTP_SEE_OTHER);

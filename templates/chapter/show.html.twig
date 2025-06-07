@@ -6,8 +6,14 @@
 <div class="max-w-3xl mx-auto px-4 py-10 text-gray-800">
     <h1 class="text-4xl font-bold text-center mb-8">Capítulo {{ chapter.number }}</h1>
 
-    <article class="prose prose-lg prose-slate dark:prose-invert mx-auto">
-        {{ chapter.content|raw }}
+    <article>
+<p class="mb-6 text-sm text-secondary flex items-center gap-4">
+    Libro {{ chapter.book.number }} {{ chapter.book.title }}, Volumen {{ chapter.book.volume.number }} — POV: {{ chapter.role.name }}
+    <img src="{{ chapter.role.image }}" alt="Aspecto personaje" style="max-width: 150px;" />
+</p>
+        <div class="prose prose-lg">
+            {{ chapter.content|raw }}
+        </div>
     </article>
 
     <div class="mt-12 flex justify-between text-blue-600 text-sm">

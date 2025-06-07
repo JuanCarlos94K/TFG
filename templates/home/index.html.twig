@@ -16,7 +16,7 @@
                     <strong>Libro {{ book.number }}: {{ book.title }}</strong><br>
 
                     {% if book.cover %}
-                        <img src="{{ asset('uploads/covers/' ~ book.cover) }}" alt="Portada de {{ book.title }}" style="max-width: 100px;"><br>
+                        <img src= {{book.cover}}" alt="Portada de {{ book.title }}" style="max-width: 100px;"><br>
                     {% endif %}
 
                     {% if book.chapters|length > 0 %}

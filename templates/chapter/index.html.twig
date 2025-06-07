@@ -3,39 +3,21 @@
 {% block title %}Chapter index{% endblock %}
 
 {% block body %}
-    <h1>Chapter index</h1>
+    <h1 class="text-3xl font-bold mb-6">Capítulos</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Number</th>
-                <th>Slug</th>
-                <th>Content</th>
-                <th>PublishedAt</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for chapter in chapters %}
-            <tr>
-                <td>{{ chapter.id }}</td>
-                <td>{{ chapter.number }}</td>
-                <td>{{ chapter.slug }}</td>
-                <td>{{ chapter.content }}</td>
-                <td>{{ chapter.publishedAt ? chapter.publishedAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('chapter_show', {'slug': chapter.slug}) }}">show</a>
-                    <a href="{{ path('app_chapter_edit', {'id': chapter.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
-        {% endfor %}
+<ul>
+    {% for chapter in chapters %}
+        <li class="mb-6 p-4 bg-white shadow-card rounded">
+            <strong class="text-xl text-primary">Capítulo {{ chapter.number }}</strong><br>
+            <span class="text-secondary">Libro {{chapter.book.number}} {{ chapter.book.title }} / Volumen: {{ chapter.book.volume.number }}</span><br>
+            <span class="italic">POV: {{ chapter.role.name }}</span>
+        </li>
+    {% else %}
+        <li class="text-secondary">No hay capítulos todavía.</li>
+    {% endfor %}
+</ul>
         </tbody>
     </table>
 
-    <a href="{{ path('app_chapter_new') }}">Create new</a>
+    <a href="{{ path('app_chapter_new') }}">Nuevo</a>
 {% endblock %}
