@@ -25,23 +25,24 @@ final class ChapterController extends AbstractController
 
     #[Route('/new', name: 'app_chapter_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $chapter = new Chapter();
-        $form = $this->createForm(ChapterForm::class, $chapter);
-        $form->handleRequest($request);
+{
+    $chapter = new Chapter();
+    $form = $this->createForm(ChapterForm::class, $chapter);
+    $form->handleRequest($request);
+    if ($form->isSubmitted()) {
+    dump($form->getErrors(true));
+}
+    if ($form->isSubmitted() && $form->isValid()) {
+        $entityManager->persist($chapter);
+        $entityManager->flush();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($chapter);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_chapter_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-            return $this->render('chapter/new.html.twig', [
-            'chapter' => $chapter,
-            'form' => $form->createView(),
-            ]);
+        return $this->redirectToRoute('chapters');
     }
+
+    return $this->render('chapter/new.html.twig', [
+        'form' => $form->createView(),
+    ]);
+}
 
     #[Route('/{slug}', name: 'chapter_show', methods: ['GET'])]
     public function show(ChapterRepository $chapterRepository, string $slug): Response
