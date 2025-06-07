@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Comentarios{% endblock %}
+
+{% block body %}
+    <h1 class="text-3xl font-bold mb-6">Lista de Comentarios</h1>
+    {% for comment in comments %}
+        <div class="mb-4 p-4 border rounded">
+            <h2 class="text-xl font-semibold">{{ comment.author }}</h2>
+            <p class="text-sm text-gray-500">{{ comment.createdAt|date('d/m/Y H:i') }}</p>
+            <p>{{ comment.content }}</p>
+            <a href="{{ path('comment_show', {'id': comment.id}) }}" class="text-blue-600">Ver detalle</a>
+        </div>
+    {% else %}
+        <p>No hay comentarios aún.</p>
+    {% endfor %}
+{% endblock %}

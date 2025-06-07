@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Comentario de {{ comment.author }}{% endblock %}
+
+{% block body %}
+    <h1 class="text-2xl font-bold mb-4">Comentario de {{ comment.author }}</h1>
+    <p class="text-sm text-gray-500 mb-2">{{ comment.createdAt|date('d/m/Y H:i') }}</p>
+    <div class="prose">
+        <p>{{ comment.content }}</p>
+    </div>
+    <a href="{{ path('comment_index') }}" class="text-blue-600 mt-4 inline-block">← Volver</a>
+{% endblock %}
