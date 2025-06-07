@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use App\Entity\book;
 use App\Entity\chapter;
 use App\Entity\role;
@@ -20,7 +21,10 @@ class ChapterForm extends AbstractType
             ->add('number')
             ->add('slug')
             ->add('content')
-            ->add('publishedAt')
+            ->add('publishedAt', DateTimeType::class, [
+                'widget' => 'single_text',
+                'required' => false,
+            ])
             ->add('book', EntityType::class, [
                 'class' => book::class,
                 'choice_label' => 'title',
