@@ -27,7 +27,7 @@ class Book
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'books')]
-    private ?Volume $Volume = null;
+    private ?Volume $volume = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $cover = null;
@@ -86,12 +86,12 @@ class Book
 
     public function getVolume(): ?Volume
     {
-        return $this->Volume;
+        return $this->volume;
     }
 
-    public function setVolume(?Volume $Volume): static
+    public function setVolume(?Volume $volume): static
     {
-        $this->Volume = $Volume;
+        $this->volume = $volume;
 
         return $this;
     }

@@ -1,19 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Blog - Capítulos{% endblock %}
+{% block title %}Inicio - Libros por Volumen{% endblock %}
 
 {% block body %}
-<h1>Capítulos</h1>
+<h1>Libros por Volumen</h1>
 
-<ul>
-    {% for chapter in chapters %}
-        <li>
-            <strong>Capítulo {{ chapter.number }}</strong><br>
-            Libro: {{ chapter.book.title }} / Volumen: {{ chapter.book.volume.number }}<br>
-            POV: {{ chapter.role.name }}
-        </li>
-    {% else %}
-        <li>No hay capítulos todavía.</li>
+{% if volumes is empty %}
+    <p>No hay libros aún.</p>
+{% else %}
+    {% for volumeTitle, books in volumes %}
+        <h2>{{ volumeTitle }}</h2>
+        <ul>
+            {% for book in books %}
+                <li>
+                    <strong>Libro {{ book.number }}: {{ book.title }}</strong><br>
+
+                    {% if book.cover %}
+                        <img src="{{ asset('uploads/covers/' ~ book.cover) }}" alt="Portada de {{ book.title }}" style="max-width: 100px;"><br>
+                    {% endif %}
+
+                    {% if book.chapters|length > 0 %}
+                        Capítulos:
+                        <ul>
+                            {% for chapter in book.chapters %}
+                                <li>Capítulo {{ chapter.number }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <em>Sin capítulos</em>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
     {% endfor %}
-</ul>
+{% endif %}
 {% endblock %}
