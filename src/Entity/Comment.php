@@ -24,7 +24,7 @@ class Comment
     private ?User $author = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
-    private ?chapter $chapter = null;
+    private ?Chapter $chapter = null;
 
     public function getId(): ?int
     {
@@ -67,12 +67,12 @@ class Comment
         return $this;
     }
 
-    public function getChapter(): ?chapter
+    public function getChapter(): ?Chapter
     {
         return $this->chapter;
     }
 
-    public function setChapter(?chapter $chapter): static
+    public function setChapter(?Chapter $chapter): static
     {
         $this->chapter = $chapter;
 

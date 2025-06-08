@@ -11,6 +11,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Entity\Comment;
+use App\Form\CommentTypeForm;
+use Symfony\Component\Security\Core\Security;
 
 #[Route('/chapter')]
 final class ChapterController extends AbstractController
@@ -27,18 +30,15 @@ final class ChapterController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
 {
     $chapter = new Chapter();
-    $request->getSession()->set('test', 'foo');
-    dump($request->getSession()->get('test'));
+  
     $form = $this->createForm(ChapterForm::class, $chapter);
     $form->handleRequest($request);
-    if ($form->isSubmitted()) {
-    dump($form->getErrors(true));
-}
+   
     if ($form->isSubmitted() && $form->isValid()) {
         $entityManager->persist($chapter);
         $entityManager->flush();
 
-        return $this->redirectToRoute('chapters');
+        return $this->redirectToRoute('chapter');
     }
 
     return $this->render('chapter/new.html.twig', [
@@ -46,32 +46,92 @@ final class ChapterController extends AbstractController
     ]);
 }
 
-    #[Route('/{slug}', name: 'chapter_show', methods: ['GET'])]
-    public function show(ChapterRepository $chapterRepository, string $slug): Response
-    {
-        $chapter = $chapterRepository->findOneBy(['slug' => $slug]);
+    #[Route('/{slug}', name: 'chapter_show', methods: ['GET', 'POST'])]
+public function show(
+    ChapterRepository $chapterRepository,
+    string $slug,
+    Request $request,
+    EntityManagerInterface $entityManager,
+    Security $security
+): Response {
+    $chapter = $chapterRepository->findOneBy(['slug' => $slug]);
 
-        if (!$chapter) {
-            throw $this->createNotFoundException('Capítulo no encontrado');
+    if (!$chapter) {
+        throw $this->createNotFoundException('Capítulo no encontrado');
+    }
+
+    $previousChapter = $chapterRepository->findOneBy([
+        'book' => $chapter->getBook(),
+        'number' => $chapter->getNumber() - 1,
+    ]);
+
+    $nextChapter = $chapterRepository->findOneBy([
+        'book' => $chapter->getBook(),
+        'number' => $chapter->getNumber() + 1,
+    ]);
+
+    // 🚩 Aquí creamos el formulario de comentario
+    $comment = new Comment();
+    $comment->setChapter($chapter);
+    $comment->setAuthor($security->getUser());
+
+    $form = $this->createForm(CommentTypeForm::class, $comment);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $comment->setCreatedAt(new \DateTimeImmutable());
+
+        $entityManager->persist($comment);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Comentario enviado correctamente.');
+
+        // Redirige para evitar reenvío de formulario
+        return $this->redirectToRoute('chapter_show', ['slug' => $chapter->getSlug()]);
+    }
+
+    return $this->render('chapter/show.html.twig', [
+        'chapter' => $chapter,
+        'previousChapter' => $previousChapter,
+        'nextChapter' => $nextChapter,
+        'commentForm' => $form->createView(), // 🚩 Aquí pasamos commentForm
+    ]);
+}
+
+    #[Route('/{id}/edit', name: 'app_chapter_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Chapter $chapter, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(ChapterForm::class, $chapter);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_chapter_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        $previousChapter = $chapterRepository->findOneBy([
-            'book' => $chapter->getBook(),
-            'number' => $chapter->getNumber() - 1,
-        ]);
-
-        $nextChapter = $chapterRepository->findOneBy([
-            'book' => $chapter->getBook(),
-            'number' => $chapter->getNumber() + 1,
-        ]);
-
-        return $this->render('chapter/show.html.twig', [
+        return $this->render('chapter/edit.html.twig', [
             'chapter' => $chapter,
-            'previousChapter' => $previousChapter,
-            'nextChapter' => $nextChapter,
+            'form' => $form,
         ]);
     }
 
+    #[Route('/{id}', name: 'app_chapter_delete', methods: ['POST'])]
+    public function delete(Request $request, Chapter $chapter, EntityManagerInterface $entityManager): Response
+    {
+        // El token CSRF para el borrado debe coincidir con este id único
+        $submittedToken = $request->request->get('_token');
+
+        if ($this->isCsrfTokenValid('delete'.$chapter->getId(), $submittedToken)) {
+            $entityManager->remove($chapter);
+            $entityManager->flush();
+        } else {
+            // Opcional: lanzar excepción o mostrar mensaje si el token no es válido
+            throw $this->createAccessDeniedException('Token CSRF inválido.');
+        }
+
+        return $this->redirectToRoute('app_chapter_index', [], Response::HTTP_SEE_OTHER);
+    }
 
     #[Route('/chapters', name: 'chapter_list')]
     public function list(ChapterRepository $chapterRepository, PaginatorInterface $paginator, Request $request): Response

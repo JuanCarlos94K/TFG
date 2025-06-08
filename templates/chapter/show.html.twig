@@ -31,5 +31,27 @@
             </a>
         {% endif %}
     </div>
+
+    <h2>Comentarios</h2>
+
+{% for comment in chapter.comments %}
+    <div class="comment">
+        <strong>{{ comment.user.email }}</strong> dijo el {{ comment.createdAt|date('d/m/Y H:i') }}:
+        <p>{{ comment.content }}</p>
+    </div>
+{% else %}
+    <p>No hay comentarios todavía.</p>
+{% endfor %}
+
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    <h3>Deja un comentario</h3>
+    {{ form_start(commentForm, { action: path('chapter_show', { slug: chapter.slug }) }) }}
+{{ form_widget(commentForm) }}
+<button type="submit">Enviar comentario</button>
+{{ form_end(commentForm) }}
+{% else %}
+    <p><a href="{{ path('app_login') }}">Inicia sesión</a> para dejar un comentario.</p>
+{% endif %}
+
 </div>
 {% endblock %}
