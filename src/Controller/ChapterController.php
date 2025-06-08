@@ -52,7 +52,6 @@ public function show(
     string $slug,
     Request $request,
     EntityManagerInterface $entityManager,
-    Security $security
 ): Response {
     $chapter = $chapterRepository->findOneBy(['slug' => $slug]);
 
@@ -73,7 +72,7 @@ public function show(
     // 🚩 Aquí creamos el formulario de comentario
     $comment = new Comment();
     $comment->setChapter($chapter);
-    $comment->setAuthor($security->getUser());
+    $comment->setAuthor($this->getUser());
 
     $form = $this->createForm(CommentTypeForm::class, $comment);
     $form->handleRequest($request);

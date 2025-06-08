@@ -1,18 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Book index{% endblock %}
+{% block title %}Listado de Libros{% endblock %}
 
 {% block body %}
-    <h1 class="text-3xl font-bold mb-6">Book index</h1>
+    <h1 class="text-3xl font-bold mb-6">Listado de Libros</h1>
 
     <table class="min-w-full border-collapse border border-gray-200 shadow-md">
         <thead class="bg-gray-100">
             <tr>
-                <th class="border border-gray-300 px-4 py-2 text-left">Number</th>
-                <th class="border border-gray-300 px-4 py-2 text-left">Title</th>
-                <th class="border border-gray-300 px-4 py-2 text-left">Description</th>
-                <th class="border border-gray-300 px-4 py-2 text-left">Cover</th>
-                <th class="border border-gray-300 px-4 py-2 text-left">Actions</th>
+                <th class="border border-gray-300 px-4 py-2 text-left">Numbero</th>
+                <th class="border border-gray-300 px-4 py-2 text-left">Título</th>
+                <th class="border border-gray-300 px-4 py-2 text-left">Descripción</th>
+                <th class="border border-gray-300 px-4 py-2 text-left">Portada</th>
+                <th class="border border-gray-300 px-4 py-2 text-left">Actiones</th>
             </tr>
         </thead>
         <tbody>
@@ -23,14 +23,14 @@
                 <td class="border border-gray-300 px-4 py-2 align-top">{{ book.description }}</td>
                 <td class="border border-gray-300 px-4 py-2 align-top">
                     {% if book.cover %}
-                    <img src="{{ book.cover }}" alt="Portada del libro" style="max-width: 200px;" />
+                    <img src="{{ book.cover }}" alt="Portada del libro" style="max-width: 250px;" />
                     {% else %}
                         <span class="italic text-gray-500">No cover</span>
                     {% endif %}
                 </td>
                 <td class="border border-gray-300 px-4 py-2 align-top space-x-2">
-                    <a href="{{ path('app_book_show', {'id': book.id}) }}" class="text-blue-600 hover:underline">show</a>
-                    <a href="{{ path('app_book_edit', {'id': book.id}) }}" class="text-green-600 hover:underline">edit</a>
+                    <a href="{{ path('app_book_show', {'id': book.id}) }}" class="text-blue-600 hover:underline">ampliar</a>
+                    <a href="{{ path('app_book_edit', {'id': book.id}) }}" class="text-green-600 hover:underline">editar</a>
                 </td>
             </tr>
         {% else %}
