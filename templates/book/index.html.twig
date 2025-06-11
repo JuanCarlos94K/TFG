@@ -11,7 +11,7 @@
                 <th class="border border-gray-300 px-4 py-2 text-left">Título</th>
                 <th class="border border-gray-300 px-4 py-2 text-left">Descripción</th>
                 <th class="border border-gray-300 px-4 py-2 text-left">Portada</th>
-                <th class="border border-gray-300 px-4 py-2 text-left">Actiones</th>
+                <th class="border border-gray-300 px-4 py-2 text-left">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -21,7 +21,7 @@
                 <td class="border border-gray-300 px-4 py-2 align-top">{{ book.description }}</td>
                 <td class="border border-gray-300 px-4 py-2 align-top">
                     {% if book.cover %}
-                    <img src="{{ book.cover }}" alt="Portada del libro" style="max-width: 250px;" />
+                    <img src="{{ book.cover }}" alt="Portada del libro" style="max-width: 200px;" />
                     {% else %}
                         <span class="italic text-gray-500">No cover</span>
                     {% endif %}
