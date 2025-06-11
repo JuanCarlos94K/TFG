@@ -22,7 +22,7 @@ class RegistrationForm extends AbstractType
             ->add('username', TextType::class, [
             'label' => 'Nombre de usuario',
                     ])
-            ->add('email')
+            ->add('email') 
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [

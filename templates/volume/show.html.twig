@@ -3,28 +3,24 @@
 {% block title %}Volume{% endblock %}
 
 {% block body %}
-    <h1>Volume</h1>
+    <h1>Volúmenes</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ volume.id }}</td>
-            </tr>
-            <tr>
-                <th>Number</th>
+                <th>Número</th>
                 <td>{{ volume.number }}</td>
             </tr>
             <tr>
-                <th>Description</th>
+                <th>Descripción</th>
                 <td>{{ volume.description }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_volume_index') }}">back to list</a>
+    <a href="{{ path('app_volume_index') }}">Volver</a>
 
-    <a href="{{ path('app_volume_edit', {'id': volume.id}) }}">edit</a>
+    <a href="{{ path('app_volume_edit', {'id': volume.id}) }}">Editar</a>
 
     {{ include('volume/_delete_form.html.twig') }}
 {% endblock %}

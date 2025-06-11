@@ -19,17 +19,17 @@
                 <td>{{ volume.number }}</td>
                 <td>{{ volume.description }}</td>
                 <td>
-                    <a href="{{ path('app_volume_show', {'id': volume.id}) }}">show</a>
-                    <a href="{{ path('app_volume_edit', {'id': volume.id}) }}">edit</a>
+                    <a href="{{ path('app_volume_show', {'id': volume.id}) }}">Mostrar</a>
+                    <a href="{{ path('app_volume_edit', {'id': volume.id}) }}">Editar</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">No encontrado</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_volume_new') }}">Create new</a>
+    <a href="{{ path('app_volume_new') }}">Crear nuevo</a>
 {% endblock %}

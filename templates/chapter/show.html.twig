@@ -12,7 +12,7 @@
     <img src="{{ chapter.role.image }}" alt="Aspecto personaje" style="max-width: 150px;" />
 </p>
         <div class="prose prose-lg">
-            {{ chapter.content|raw }}
+            {{ chapter.content|nl2br }}
         </div>
     </article>
 
@@ -36,7 +36,7 @@
 
 {% for comment in chapter.comments %}
     <div class="comment">
-        <strong>{{ comment.user.email }}</strong> dijo el {{ comment.createdAt|date('d/m/Y H:i') }}:
+        <strong>{{ comment.author.username }}</strong> dijo el {{ comment.createdAt|date('d/m/Y H:i') }}:
         <p>{{ comment.content }}</p>
     </div>
 {% else %}

@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Role index{% endblock %}
+{% block title %}Personajes{% endblock %}
 
 {% block body %}
-    <h1>Role index</h1>
+    <h1>Personajes</h1>
 
     <table class="table">
         <thead>
@@ -11,7 +11,7 @@
                 <th>Nombre</th>
                 <th>Descripción</th>
                 <th>Aspecto</th>
-                <th>actions</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -21,8 +21,8 @@
                 <td>{{ role.description }}</td>
                 <td> <img src="{{ role.image }}" alt="Personaje" style="max-width: 150px;" /></td>
                 <td>
-                    <a href="{{ path('app_role_show', {'id': role.id}) }}">show</a>
-                    <a href="{{ path('app_role_edit', {'id': role.id}) }}">edit</a>
+                    <a href="{{ path('app_role_show', {'id': role.id}) }}">Mostrar</a>
+                    <a href="{{ path('app_role_edit', {'id': role.id}) }}">Editar</a>
                 </td>
             </tr>
         {% else %}
@@ -33,5 +33,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_role_new') }}">Create new</a>
+    <a href="{{ path('app_role_new') }}">Nuevo personaje</a>
 {% endblock %}

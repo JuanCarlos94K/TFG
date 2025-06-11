@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Listado de Libros{% endblock %}
+{% block title %}Libros{% endblock %}
 
 {% block body %}
     <h1 class="text-3xl font-bold mb-6">Listado de Libros</h1>
@@ -8,7 +8,6 @@
     <table class="min-w-full border-collapse border border-gray-200 shadow-md">
         <thead class="bg-gray-100">
             <tr>
-                <th class="border border-gray-300 px-4 py-2 text-left">Numbero</th>
                 <th class="border border-gray-300 px-4 py-2 text-left">Título</th>
                 <th class="border border-gray-300 px-4 py-2 text-left">Descripción</th>
                 <th class="border border-gray-300 px-4 py-2 text-left">Portada</th>
@@ -18,7 +17,6 @@
         <tbody>
         {% for book in books %}
             <tr class="even:bg-gray-50">
-                <td class="border border-gray-300 px-4 py-2 align-top">{{ book.number }}</td>
                 <td class="border border-gray-300 px-4 py-2 align-top">{{ book.title }}</td>
                 <td class="border border-gray-300 px-4 py-2 align-top">{{ book.description }}</td>
                 <td class="border border-gray-300 px-4 py-2 align-top">
@@ -29,8 +27,8 @@
                     {% endif %}
                 </td>
                 <td class="border border-gray-300 px-4 py-2 align-top space-x-2">
-                    <a href="{{ path('app_book_show', {'id': book.id}) }}" class="text-blue-600 hover:underline">ampliar</a>
-                    <a href="{{ path('app_book_edit', {'id': book.id}) }}" class="text-green-600 hover:underline">editar</a>
+                    <a href="{{ path('app_book_show', {'id': book.id}) }}" class="text-blue-600 hover:underline">Ampliar</a>
+                    <a href="{{ path('app_book_edit', {'id': book.id}) }}" class="text-green-600 hover:underline">Editar</a>
                 </td>
             </tr>
         {% else %}

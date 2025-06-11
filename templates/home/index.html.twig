@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inicio - Libros por Volumen{% endblock %}
+{% block title %}Inicio{% endblock %}
 
 {% block body %}
 <h1>Libros por Volumen</h1>
@@ -16,14 +16,18 @@
                     <strong>Libro {{ book.number }}: {{ book.title }}</strong><br>
 
                     {% if book.cover %}
-                        <img src= {{book.cover}}" alt="Portada de {{ book.title }}" style="max-width: 100px;"><br>
+                        <img src= "{{book.cover}}" alt="Portada de {{ book.title }}" style="max-width: 100px;"><br>
                     {% endif %}
 
                     {% if book.chapters|length > 0 %}
                         Capítulos:
                         <ul>
                             {% for chapter in book.chapters %}
-                                <li>Capítulo {{ chapter.number }}</li>
+                                <li>
+                                <a href="/chapter/{{ chapter.slug }}" class="text-blue-600 hover:underline">
+                                Capítulo {{ chapter.number }}
+                                </a>
+                                </li>
                             {% endfor %}
                         </ul>
                     {% else %}
