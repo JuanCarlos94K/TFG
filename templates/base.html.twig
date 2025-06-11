@@ -8,9 +8,10 @@
 </head>
 <body class="bg-background text-primary font-serif max-w-xl mx-auto p-6 leading-relaxed">
     {% block navbar %}
+        <img src="{{ asset('images/logo.png') }}" alt="Logo" style="max-width: 150px">
         {% if app.user %}
             <p>Hola, {{ app.user.username }} |
-        <a href="{{ path('app_logout') }}">Cerrar sesión</a></p>
+            <a href="{{ path('app_logout') }}">Cerrar sesión</a></p>
         {% else %}
             <p><a href="{{ path('app_login') }}">Iniciar sesión</a> |
             <a href="{{ path('app_register') }}">Registrarse</a></p>
@@ -20,6 +21,13 @@
     <main>
         {% block body %}{% endblock %}
     </main>
+
+ <footer class="mt-12 border-t pt-4 text-center text-sm text-gray-500">
+    Esta es una obra realizada por fans sin animo de lucro.<br>
+    Si lo deseas puedes 
+    <a href="https://www.patreon.com/pirateaba" class="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">
+apoyar al autor original   </a>.
+</footer>
 
     {% block javascripts %}
         <script src="{{ asset('build/app.js') }}"></script>
